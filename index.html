@@ -1,0 +1,1916 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>好的一 · HAODEYI BAR</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Serif+SC:wght@300;400;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --amber: #E8A838;
+    --gold: #F5C842;
+    --dark: #0A0805;
+    --charcoal: #1A1510;
+    --smoke: #2C2418;
+    --cream: #F2ECD8;
+    --rust: #C4511A;
+    --neon-yellow: #D4E642;
+    --menu-watermark: '菜单';
+  }
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+background: var(--dark);
+color: var(--cream);
+font-family: 'Space Mono', monospace;
+cursor: none;
+overflow-x: hidden;
+}
+
+/* Custom cursor */
+.cursor {
+position: fixed;
+width: 12px; height: 12px;
+background: var(--amber);
+border-radius: 50%;
+pointer-events: none;
+z-index: 9999;
+transform: translate(-50%, -50%);
+transition: transform 0.1s, background 0.2s;
+mix-blend-mode: difference;
+}
+.cursor-trail {
+position: fixed;
+width: 40px; height: 40px;
+border: 1px solid var(--amber);
+border-radius: 50%;
+pointer-events: none;
+z-index: 9998;
+transform: translate(-50%, -50%);
+transition: all 0.15s ease;
+opacity: 0.5;
+}
+
+/* Noise overlay */
+body::before {
+content: '';
+position: fixed;
+inset: 0;
+background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+pointer-events: none;
+z-index: 100;
+opacity: 0.4;
+}
+
+/* ─── HERO ─── */
+#hero {
+min-height: 100vh;
+display: grid;
+grid-template-rows: auto 1fr auto;
+position: relative;
+overflow: hidden;
+}
+
+.hero-bg {
+position: absolute;
+inset: 0;
+background:
+radial-gradient(ellipse 80% 60% at 70% 50%, rgba(232,168,56,0.12) 0%, transparent 60%),
+radial-gradient(ellipse 40% 40% at 20% 80%, rgba(196,81,26,0.15) 0%, transparent 50%),
+var(--dark);
+}
+
+/* Animated grid lines */
+.hero-bg::after {
+content: '';
+position: absolute;
+inset: 0;
+background-image:
+linear-gradient(rgba(232,168,56,0.04) 1px, transparent 1px),
+linear-gradient(90deg, rgba(232,168,56,0.04) 1px, transparent 1px);
+background-size: 60px 60px;
+animation: gridDrift 20s linear infinite;
+}
+
+@keyframes gridDrift {
+0% { transform: translate(0,0); }
+100% { transform: translate(60px, 60px); }
+}
+
+nav {
+position: relative;
+z-index: 10;
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 2rem 3rem;
+border-bottom: 1px solid rgba(232,168,56,0.15);
+}
+
+.nav-logo {
+font-family: 'Bebas Neue', sans-serif;
+font-size: 2rem;
+letter-spacing: 0.15em;
+color: var(--amber);
+text-decoration: none;
+}
+.nav-logo span { color: var(--cream); }
+
+.nav-links {
+display: flex;
+gap: 2.5rem;
+list-style: none;
+}
+.nav-links a {
+color: rgba(242,236,216,0.5);
+text-decoration: none;
+font-size: 0.7rem;
+letter-spacing: 0.2em;
+text-transform: uppercase;
+transition: color 0.3s;
+}
+.nav-links a:hover { color: var(--amber); }
+
+.nav-actions {
+display: flex;
+align-items: center;
+gap: 2rem;
+}
+
+.lang-switcher {
+display: inline-flex;
+align-items: center;
+border: 1px solid rgba(232,168,56,0.2);
+background: rgba(10,8,5,0.45);
+}
+
+.lang-btn {
+min-width: 42px;
+height: 34px;
+border: 0;
+border-right: 1px solid rgba(232,168,56,0.14);
+background: transparent;
+color: rgba(242,236,216,0.48);
+font-family: 'Space Mono', monospace;
+font-size: 0.62rem;
+letter-spacing: 0.08em;
+text-transform: uppercase;
+cursor: none;
+transition: color 0.2s, background 0.2s;
+}
+.lang-btn:last-child { border-right: 0; }
+.lang-btn:hover, .lang-btn.active {
+background: rgba(232,168,56,0.1);
+color: var(--amber);
+}
+
+.hero-content {
+position: relative;
+z-index: 10;
+display: flex;
+flex-direction: column;
+justify-content: center;
+padding: 4rem 3rem;
+}
+
+.hero-tag {
+font-size: 0.65rem;
+letter-spacing: 0.4em;
+color: var(--amber);
+text-transform: uppercase;
+margin-bottom: 1.5rem;
+display: flex;
+align-items: center;
+gap: 1rem;
+opacity: 0;
+animation: fadeUp 0.8s 0.3s forwards;
+}
+.hero-tag::before {
+content: '';
+display: block;
+width: 2rem;
+height: 1px;
+background: var(--amber);
+}
+
+.hero-title {
+font-family: 'Bebas Neue', sans-serif;
+font-size: clamp(5rem, 15vw, 13rem);
+line-height: 0.9;
+letter-spacing: -0.02em;
+mix-blend-mode: normal;
+opacity: 0;
+animation: fadeUp 0.8s 0.5s forwards;
+}
+
+.hero-title .line-amber { color: var(--amber); }
+.hero-title .line-outline {
+-webkit-text-stroke: 1px rgba(242,236,216,0.3);
+color: transparent;
+}
+
+.hero-sub {
+font-family: 'Noto Serif SC', serif;
+font-size: clamp(1rem, 2vw, 1.4rem);
+font-weight: 300;
+color: rgba(242,236,216,0.55);
+margin-top: 2rem;
+max-width: 500px;
+line-height: 1.7;
+opacity: 0;
+animation: fadeUp 0.8s 0.7s forwards;
+}
+
+.hero-cta {
+margin-top: 3rem;
+display: flex;
+gap: 1.5rem;
+align-items: center;
+opacity: 0;
+animation: fadeUp 0.8s 0.9s forwards;
+}
+
+.btn-primary {
+background: var(--amber);
+color: var(--dark);
+padding: 1rem 2.5rem;
+font-family: 'Space Mono', monospace;
+font-size: 0.75rem;
+letter-spacing: 0.2em;
+text-transform: uppercase;
+text-decoration: none;
+font-weight: 700;
+position: relative;
+overflow: hidden;
+transition: transform 0.2s;
+display: inline-block;
+}
+.btn-primary::after {
+content: '';
+position: absolute;
+inset: 0;
+background: white;
+transform: translateX(-101%);
+transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+.btn-primary:hover { transform: translateY(-2px); }
+.btn-primary:hover::after { transform: translateX(0); mix-blend-mode: difference; }
+
+.btn-ghost {
+color: var(--cream);
+font-size: 0.75rem;
+letter-spacing: 0.15em;
+text-transform: uppercase;
+text-decoration: none;
+opacity: 0.5;
+transition: opacity 0.2s;
+display: flex;
+align-items: center;
+gap: 0.5rem;
+}
+.btn-ghost:hover { opacity: 1; }
+.btn-ghost::after { content: '→'; }
+
+/* Floating badges */
+.hero-badges {
+position: absolute;
+right: 5%;
+top: 50%;
+transform: translateY(-50%);
+display: flex;
+flex-direction: column;
+gap: 1.5rem;
+z-index: 10;
+opacity: 0;
+animation: fadeIn 1s 1.2s forwards;
+}
+
+.badge {
+border: 1px solid rgba(232,168,56,0.25);
+padding: 1.2rem 1.5rem;
+text-align: center;
+backdrop-filter: blur(10px);
+background: rgba(10,8,5,0.5);
+position: relative;
+}
+.badge::before {
+content: '';
+position: absolute;
+top: -1px; left: -1px;
+width: 20px; height: 20px;
+border-top: 2px solid var(--amber);
+border-left: 2px solid var(--amber);
+}
+.badge-num {
+font-family: 'Bebas Neue', sans-serif;
+font-size: 2.5rem;
+color: var(--amber);
+line-height: 1;
+}
+.badge-label {
+font-size: 0.55rem;
+letter-spacing: 0.2em;
+text-transform: uppercase;
+color: rgba(242,236,216,0.4);
+margin-top: 0.3rem;
+}
+
+.hero-footer {
+position: relative;
+z-index: 10;
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 1.5rem 3rem;
+border-top: 1px solid rgba(232,168,56,0.1);
+font-size: 0.6rem;
+letter-spacing: 0.2em;
+color: rgba(242,236,216,0.3);
+}
+
+/* Scroll indicator */
+.scroll-hint {
+display: flex;
+align-items: center;
+gap: 0.8rem;
+animation: bounce 2s infinite;
+}
+.scroll-line {
+width: 1px;
+height: 3rem;
+background: linear-gradient(to bottom, var(--amber), transparent);
+}
+@keyframes bounce {
+0%, 100% { transform: translateY(0); }
+50% { transform: translateY(6px); }
+}
+
+@keyframes fadeUp {
+from { opacity: 0; transform: translateY(30px); }
+to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+from { opacity: 0; }
+to { opacity: 1; }
+}
+
+/* ─── MARQUEE ─── */
+.marquee-section {
+border-top: 1px solid rgba(232,168,56,0.2);
+border-bottom: 1px solid rgba(232,168,56,0.2);
+padding: 1.2rem 0;
+background: var(--charcoal);
+overflow: hidden;
+}
+
+.marquee-track {
+display: flex;
+gap: 0;
+animation: marqueeScroll 20s linear infinite;
+white-space: nowrap;
+}
+
+.marquee-item {
+display: inline-flex;
+align-items: center;
+gap: 2rem;
+padding: 0 2rem;
+font-family: 'Bebas Neue', sans-serif;
+font-size: 1.1rem;
+letter-spacing: 0.3em;
+color: rgba(232,168,56,0.6);
+}
+.marquee-item .dot {
+width: 4px; height: 4px;
+background: var(--rust);
+border-radius: 50%;
+}
+
+@keyframes marqueeScroll {
+from { transform: translateX(0); }
+to { transform: translateX(-50%); }
+}
+
+/* ─── ABOUT ─── */
+#about {
+display: grid;
+grid-template-columns: 1fr 1fr;
+min-height: 80vh;
+position: relative;
+}
+
+.about-visual {
+position: relative;
+background: var(--charcoal);
+overflow: hidden;
+}
+
+.photo-grid {
+position: absolute;
+inset: 0;
+display: grid;
+grid-template-columns: 1fr 1fr;
+grid-template-rows: 1fr 1fr;
+gap: 2px;
+}
+
+.photo-cell {
+position: relative;
+overflow: hidden;
+background: var(--dark);
+}
+
+.photo-cell img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+display: block;
+filter: saturate(0.92) contrast(1.04);
+transition: transform 0.6s cubic-bezier(0.4,0,0.2,1);
+}
+.photo-cell:hover img { transform: scale(1.05); }
+
+.photo-cell .label {
+position: absolute;
+bottom: 1rem;
+left: 1rem;
+font-size: 0.5rem;
+letter-spacing: 0.3em;
+color: rgba(232,168,56,0.5);
+text-transform: uppercase;
+z-index: 2;
+}
+
+.photo-cell::after {
+content: '';
+position: absolute;
+inset: 0;
+background: linear-gradient(to top, rgba(10,8,5,0.72), transparent 42%);
+pointer-events: none;
+}
+
+.about-content {
+padding: 5rem 4rem;
+display: flex;
+flex-direction: column;
+justify-content: center;
+background: var(--smoke);
+position: relative;
+}
+.about-content::before {
+content: '"';
+position: absolute;
+top: 2rem;
+left: 2rem;
+font-family: 'Bebas Neue', sans-serif;
+font-size: 15rem;
+color: rgba(232,168,56,0.04);
+line-height: 1;
+pointer-events: none;
+}
+
+.section-tag {
+font-size: 0.6rem;
+letter-spacing: 0.4em;
+color: var(--amber);
+text-transform: uppercase;
+margin-bottom: 1.5rem;
+display: flex;
+align-items: center;
+gap: 1rem;
+}
+.section-tag::before {
+content: '';
+display: block;
+width: 1.5rem;
+height: 1px;
+background: var(--amber);
+}
+
+.about-title {
+font-family: 'Bebas Neue', sans-serif;
+font-size: clamp(2.5rem, 4vw, 4rem);
+line-height: 1.05;
+letter-spacing: 0.02em;
+margin-bottom: 2rem;
+}
+
+.about-body {
+font-family: 'Noto Serif SC', serif;
+font-weight: 300;
+font-size: 0.95rem;
+line-height: 2;
+color: rgba(242,236,216,0.65);
+margin-bottom: 3rem;
+}
+
+.about-stats {
+display: flex;
+gap: 3rem;
+}
+.stat-num {
+font-family: 'Bebas Neue', sans-serif;
+font-size: 3rem;
+color: var(--amber);
+line-height: 1;
+}
+.stat-label {
+font-size: 0.55rem;
+letter-spacing: 0.2em;
+color: rgba(242,236,216,0.3);
+text-transform: uppercase;
+margin-top: 0.3rem;
+}
+
+/* ─── MENU SECTION ─── */
+#menu {
+padding: 6rem 3rem;
+background: var(--dark);
+position: relative;
+overflow: hidden;
+}
+
+#menu::before {
+content: var(--menu-watermark);
+position: absolute;
+top: -2rem;
+right: -2rem;
+font-family: 'Bebas Neue', sans-serif;
+font-size: 18rem;
+color: rgba(232,168,56,0.03);
+line-height: 1;
+pointer-events: none;
+user-select: none;
+}
+
+.menu-header {
+display: flex;
+justify-content: space-between;
+align-items: flex-end;
+margin-bottom: 4rem;
+}
+
+.menu-title {
+font-family: 'Bebas Neue', sans-serif;
+font-size: clamp(3rem, 6vw, 6rem);
+line-height: 1;
+}
+
+.menu-filter {
+display: flex;
+gap: 1rem;
+}
+
+.filter-btn {
+padding: 0.6rem 1.5rem;
+font-family: 'Space Mono', monospace;
+font-size: 0.65rem;
+letter-spacing: 0.15em;
+text-transform: uppercase;
+border: 1px solid rgba(232,168,56,0.2);
+background: none;
+color: rgba(242,236,216,0.4);
+cursor: none;
+transition: all 0.2s;
+}
+.filter-btn.active, .filter-btn:hover {
+border-color: var(--amber);
+color: var(--amber);
+background: rgba(232,168,56,0.05);
+}
+
+.menu-grid {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+gap: 1px;
+background: rgba(232,168,56,0.1);
+}
+
+.menu-card {
+background: var(--charcoal);
+padding: 2rem;
+position: relative;
+overflow: hidden;
+transition: background 0.3s;
+cursor: none;
+}
+.menu-card:hover { background: var(--smoke); }
+.menu-card::before {
+content: '';
+position: absolute;
+top: 0; left: 0;
+width: 3px;
+height: 0;
+background: var(--amber);
+transition: height 0.3s;
+}
+.menu-card:hover::before { height: 100%; }
+
+.menu-card-emoji {
+font-size: 2rem;
+margin-bottom: 1rem;
+display: block;
+}
+
+.menu-card-name {
+font-family: 'Noto Serif SC', serif;
+font-size: 1.1rem;
+margin-bottom: 0.5rem;
+color: var(--cream);
+}
+
+.menu-card-desc {
+font-size: 0.65rem;
+color: rgba(242,236,216,0.35);
+line-height: 1.7;
+letter-spacing: 0.05em;
+margin-bottom: 1.5rem;
+}
+
+.menu-card-footer {
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.price {
+font-family: 'Bebas Neue', sans-serif;
+font-size: 1.8rem;
+color: var(--amber);
+}
+.price span {
+font-family: 'Space Mono', monospace;
+font-size: 0.65rem;
+color: rgba(232,168,56,0.5);
+vertical-align: middle;
+}
+
+.order-btn {
+width: 36px; height: 36px;
+border: 1px solid rgba(232,168,56,0.3);
+background: none;
+color: var(--amber);
+font-size: 1.2rem;
+display: flex;
+align-items: center;
+justify-content: center;
+cursor: none;
+transition: all 0.2s;
+}
+.order-btn:hover {
+background: var(--amber);
+color: var(--dark);
+}
+
+/* ─── ATMOSPHERE ─── */
+#atmosphere {
+padding: 6rem 3rem;
+background: var(--charcoal);
+}
+
+.atm-header {
+text-align: center;
+margin-bottom: 4rem;
+}
+
+.atm-title {
+font-family: 'Bebas Neue', sans-serif;
+font-size: clamp(3rem, 6vw, 6rem);
+margin-bottom: 1rem;
+}
+
+.atm-subtitle {
+font-family: 'Noto Serif SC', serif;
+font-weight: 300;
+color: rgba(242,236,216,0.4);
+font-size: 0.9rem;
+letter-spacing: 0.1em;
+}
+
+.atm-features {
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+gap: 2px;
+background: rgba(232,168,56,0.08);
+margin-top: 4rem;
+}
+
+.feature {
+background: var(--dark);
+padding: 3rem 2rem;
+text-align: center;
+position: relative;
+transition: background 0.3s;
+}
+.feature:hover { background: var(--charcoal); }
+
+.feature-icon {
+font-size: 2.5rem;
+margin-bottom: 1.5rem;
+display: block;
+}
+
+.feature-title {
+font-family: 'Bebas Neue', sans-serif;
+font-size: 1.3rem;
+letter-spacing: 0.1em;
+margin-bottom: 0.8rem;
+color: var(--amber);
+}
+
+.feature-body {
+font-size: 0.65rem;
+letter-spacing: 0.1em;
+color: rgba(242,236,216,0.35);
+line-height: 1.8;
+}
+
+/* ─── PHOTOS ─── */
+#photos {
+padding: 6rem 3rem;
+background: var(--smoke);
+position: relative;
+overflow: hidden;
+}
+
+.photos-header {
+display: flex;
+align-items: flex-end;
+justify-content: space-between;
+gap: 3rem;
+margin-bottom: 3rem;
+}
+
+.photos-title {
+font-family: 'Bebas Neue', sans-serif;
+font-size: clamp(3rem, 6vw, 6rem);
+line-height: 1;
+}
+
+.photos-copy {
+max-width: 420px;
+font-family: 'Noto Serif SC', serif;
+font-size: 0.9rem;
+font-weight: 300;
+line-height: 1.9;
+color: rgba(242,236,216,0.52);
+}
+
+.photos-grid {
+display: grid;
+grid-template-columns: 1.2fr 0.8fr 0.8fr;
+grid-auto-rows: minmax(240px, 32vw);
+gap: 2px;
+background: rgba(232,168,56,0.1);
+}
+
+.gallery-photo {
+position: relative;
+overflow: hidden;
+background: var(--dark);
+min-height: 240px;
+}
+
+.gallery-photo:first-child {
+grid-row: span 2;
+}
+
+.gallery-photo:last-child {
+grid-column: span 2;
+}
+
+.gallery-photo img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+display: block;
+filter: saturate(0.95) contrast(1.05);
+transition: transform 0.7s cubic-bezier(0.4,0,0.2,1), filter 0.7s;
+}
+
+.gallery-photo:hover img {
+transform: scale(1.045);
+filter: saturate(1.08) contrast(1.08);
+}
+
+.gallery-caption {
+position: absolute;
+left: 1rem;
+right: 1rem;
+bottom: 1rem;
+z-index: 2;
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 1rem;
+font-size: 0.62rem;
+letter-spacing: 0.18em;
+text-transform: uppercase;
+color: rgba(242,236,216,0.78);
+}
+
+.gallery-photo::after {
+content: '';
+position: absolute;
+inset: 0;
+background: linear-gradient(to top, rgba(10,8,5,0.78), transparent 50%);
+pointer-events: none;
+}
+
+/* ─── HOURS / LOCATION ─── */
+#visit {
+display: grid;
+grid-template-columns: 1fr 1fr;
+}
+
+.visit-info {
+padding: 6rem 4rem;
+background: var(--smoke);
+}
+
+.hours-grid {
+margin-top: 3rem;
+display: grid;
+gap: 0;
+border-top: 1px solid rgba(232,168,56,0.1);
+}
+
+.hour-row {
+display: flex;
+justify-content: space-between;
+padding: 1.2rem 0;
+border-bottom: 1px solid rgba(232,168,56,0.08);
+font-size: 0.75rem;
+}
+.hour-day { color: rgba(242,236,216,0.5); letter-spacing: 0.1em; }
+.hour-time { color: var(--amber); }
+.hour-row.today { background: rgba(232,168,56,0.05); padding-left: 0.5rem; }
+.hour-row.today .hour-day { color: var(--cream); }
+
+.visit-map {
+background: var(--charcoal);
+position: relative;
+overflow: hidden;
+display: flex;
+align-items: center;
+justify-content: center;
+min-height: 400px;
+}
+
+.china-map-frame {
+width: 100%;
+height: 100%;
+min-height: 520px;
+inset: 0;
+border: 0;
+filter: grayscale(0.15) contrast(1.02);
+}
+
+.map-panel {
+position: absolute;
+left: 1.5rem;
+right: 1.5rem;
+bottom: 1.5rem;
+z-index: 10;
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 1rem;
+padding: 1rem 1.2rem;
+background: rgba(10,8,5,0.88);
+border: 1px solid rgba(232,168,56,0.28);
+backdrop-filter: blur(12px);
+}
+
+.map-title {
+font-family: 'Bebas Neue', sans-serif;
+font-size: 1.8rem;
+letter-spacing: 0.08em;
+color: var(--amber);
+line-height: 1;
+}
+
+.map-address {
+margin-top: 0.4rem;
+font-size: 0.6rem;
+letter-spacing: 0.08em;
+line-height: 1.6;
+color: rgba(242,236,216,0.58);
+}
+
+.map-actions {
+display: flex;
+gap: 0.6rem;
+flex-shrink: 0;
+}
+
+.map-action {
+border: 1px solid rgba(232,168,56,0.32);
+color: var(--amber);
+background: rgba(232,168,56,0.06);
+padding: 0.7rem 1rem;
+font-size: 0.62rem;
+letter-spacing: 0.14em;
+text-transform: uppercase;
+text-decoration: none;
+transition: background 0.2s, color 0.2s;
+}
+.map-action:hover {
+background: var(--amber);
+color: var(--dark);
+}
+
+/* ─── GAMES SECTION ─── */
+#games {
+padding: 6rem 3rem;
+background: var(--dark);
+text-align: center;
+}
+
+.games-title {
+font-family: 'Bebas Neue', sans-serif;
+font-size: clamp(3rem, 6vw, 6rem);
+margin-bottom: 1rem;
+}
+
+.games-sub {
+font-family: 'Noto Serif SC', serif;
+font-weight: 300;
+color: rgba(242,236,216,0.4);
+margin-bottom: 4rem;
+}
+
+.games-list {
+display: flex;
+flex-wrap: wrap;
+gap: 0.8rem;
+justify-content: center;
+max-width: 800px;
+margin: 0 auto;
+}
+
+.game-tag {
+padding: 0.7rem 1.5rem;
+border: 1px solid rgba(232,168,56,0.2);
+font-size: 0.7rem;
+letter-spacing: 0.15em;
+text-transform: uppercase;
+color: rgba(242,236,216,0.5);
+transition: all 0.2s;
+cursor: none;
+position: relative;
+overflow: hidden;
+}
+.game-tag::before {
+content: '';
+position: absolute;
+inset: 0;
+background: var(--amber);
+transform: scaleX(0);
+transform-origin: left;
+transition: transform 0.3s;
+z-index: -1;
+}
+.game-tag:hover {
+color: var(--dark);
+border-color: var(--amber);
+}
+.game-tag:hover::before { transform: scaleX(1); }
+
+/* ─── FOOTER ─── */
+footer {
+background: var(--charcoal);
+border-top: 1px solid rgba(232,168,56,0.15);
+padding: 3rem;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.footer-logo {
+font-family: 'Bebas Neue', sans-serif;
+font-size: 2.5rem;
+color: var(--amber);
+letter-spacing: 0.1em;
+}
+
+.footer-copy {
+font-size: 0.55rem;
+letter-spacing: 0.2em;
+color: rgba(242,236,216,0.2);
+text-align: center;
+}
+
+.footer-social {
+display: flex;
+gap: 1.5rem;
+}
+.social-link {
+width: 40px; height: 40px;
+border: 1px solid rgba(232,168,56,0.2);
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 1rem;
+text-decoration: none;
+transition: all 0.2s;
+cursor: none;
+}
+.social-link:hover {
+border-color: var(--amber);
+background: rgba(232,168,56,0.1);
+}
+
+/* ─── CART ─── */
+.cart-widget {
+position: fixed;
+bottom: 2rem;
+right: 2rem;
+z-index: 1000;
+display: flex;
+flex-direction: column;
+align-items: flex-end;
+gap: 0.5rem;
+}
+
+.cart-btn {
+background: var(--amber);
+color: var(--dark);
+border: none;
+width: 56px; height: 56px;
+border-radius: 0;
+font-size: 1.2rem;
+cursor: none;
+position: relative;
+transition: transform 0.2s;
+}
+.cart-btn:hover { transform: scale(1.1); }
+
+.cart-count {
+position: absolute;
+top: -8px; right: -8px;
+background: var(--rust);
+color: white;
+width: 22px; height: 22px;
+border-radius: 50%;
+font-size: 0.65rem;
+font-family: 'Space Mono', monospace;
+display: flex;
+align-items: center;
+justify-content: center;
+display: none;
+}
+.cart-count.show { display: flex; }
+
+.cart-toast {
+background: var(--charcoal);
+border: 1px solid rgba(232,168,56,0.3);
+padding: 0.8rem 1.2rem;
+font-size: 0.65rem;
+letter-spacing: 0.1em;
+color: var(--amber);
+transform: translateX(200%);
+transition: transform 0.3s;
+white-space: nowrap;
+}
+.cart-toast.show { transform: translateX(0); }
+
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--dark); }
+::-webkit-scrollbar-thumb { background: var(--amber); }
+
+/* ─── REVEAL ─── */
+.reveal {
+opacity: 0;
+transform: translateY(40px);
+transition: opacity 0.8s, transform 0.8s;
+}
+.reveal.visible {
+opacity: 1;
+transform: translateY(0);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+nav { padding: 1.5rem; }
+.nav-links { display: none; }
+.nav-actions { gap: 0; }
+.lang-switcher { margin-left: auto; }
+.lang-btn { min-width: 38px; height: 32px; }
+.hero-content { padding: 3rem 1.5rem; }
+.hero-badges { display: none; }
+#about { grid-template-columns: 1fr; }
+.about-visual { min-height: 300px; }
+.about-content { padding: 3rem 1.5rem; }
+.atm-features { grid-template-columns: 1fr 1fr; }
+.photos-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+.photos-grid { grid-template-columns: 1fr; grid-auto-rows: minmax(260px, 72vw); }
+.gallery-photo:first-child { grid-row: auto; }
+.gallery-photo:last-child { grid-column: auto; }
+#photos { padding: 4rem 1.5rem; }
+#visit { grid-template-columns: 1fr; }
+.china-map-frame { min-height: 440px; }
+.map-panel { flex-direction: column; align-items: flex-start; }
+.map-actions { width: 100%; }
+.map-action { flex: 1; text-align: center; }
+footer { flex-direction: column; gap: 2rem; text-align: center; }
+#menu { padding: 4rem 1.5rem; }
+.menu-header { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+#games { padding: 4rem 1.5rem; }
+}
+</style>
+
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-trail" id="cursorTrail"></div>
+
+<!-- ─── CART ─── -->
+
+<div class="cart-widget">
+  <div class="cart-toast" id="cartToast" data-i18n="cart.ready">已加入订单</div>
+  <button class="cart-btn" id="cartBtn" aria-label="Cart">🛒<span class="cart-count" id="cartCount">0</span></button>
+</div>
+
+<!-- ─── HERO ─── -->
+
+<section id="hero">
+  <div class="hero-bg"></div>
+
+  <nav>
+    <a href="#" class="nav-logo">好的一 <span>BAR</span></a>
+    <div class="nav-actions">
+      <ul class="nav-links">
+        <li><a href="#menu" data-i18n="nav.menu">菜单</a></li>
+        <li><a href="#atmosphere" data-i18n="nav.atmosphere">氛围</a></li>
+        <li><a href="#photos" data-i18n="nav.photos">照片</a></li>
+        <li><a href="#games" data-i18n="nav.games">游戏</a></li>
+        <li><a href="#visit" data-i18n="nav.visit">到店</a></li>
+      </ul>
+      <div class="lang-switcher" aria-label="Language">
+        <button class="lang-btn active" type="button" data-lang="zh">中文</button>
+        <button class="lang-btn" type="button" data-lang="ru">RU</button>
+        <button class="lang-btn" type="button" data-lang="en">EN</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="hero-content">
+    <div class="hero-tag" data-i18n="hero.tag">广州 · 2021 年开业</div>
+    <h1 class="hero-title">
+      <div>HAO</div>
+      <div class="line-amber">DE</div>
+      <div class="line-outline">YI</div>
+    </h1>
+    <p class="hero-sub" data-i18n="hero.sub">好的一不只是酒吧。这里是白天收尾、夜晚真正开始的地方：精酿饮品、桌游和松弛的现场气氛。</p>
+    <div class="hero-cta">
+      <a href="#menu" class="btn-primary" data-i18n="hero.cta.menu">查看菜单</a>
+      <a href="#visit" class="btn-ghost" data-i18n="hero.cta.visit">如何找到我们</a>
+    </div>
+  </div>
+
+  <div class="hero-badges">
+    <div class="badge">
+      <div class="badge-num">200+</div>
+      <div class="badge-label" data-i18n="hero.badge.items">酒水</div>
+    </div>
+    <div class="badge">
+      <div class="badge-num">50+</div>
+      <div class="badge-label" data-i18n="hero.badge.games">桌游</div>
+    </div>
+    <div class="badge">
+      <div class="badge-num">¥15</div>
+      <div class="badge-label" data-i18n="hero.badge.price">起售价</div>
+    </div>
+  </div>
+
+  <div class="hero-footer">
+    <span data-i18n="hero.footer.brand">好的一 · 享受生活</span>
+    <div class="scroll-hint">
+      <div class="scroll-line"></div>
+      <span data-i18n="hero.footer.scroll">滚动</span>
+    </div>
+    <span data-i18n="hero.footer.hours">每日 14:00 – 03:00</span>
+  </div>
+</section>
+
+<!-- ─── MARQUEE ─── -->
+
+<div class="marquee-section">
+  <div class="marquee-track" id="marquee">
+    <div class="marquee-item">KIRIN BEER <span class="dot"></span></div>
+    <div class="marquee-item">WHISKY <span class="dot"></span></div>
+    <div class="marquee-item">BOARD GAMES <span class="dot"></span></div>
+    <div class="marquee-item">LIVE VIBES <span class="dot"></span></div>
+    <div class="marquee-item">长岛冰茶 <span class="dot"></span></div>
+    <div class="marquee-item">金汤力 <span class="dot"></span></div>
+    <div class="marquee-item">桂林米粉 <span class="dot"></span></div>
+    <div class="marquee-item">CRAFT DRINKS <span class="dot"></span></div>
+    <div class="marquee-item">微醺时间 <span class="dot"></span></div>
+    <div class="marquee-item">KIRIN BEER <span class="dot"></span></div>
+    <div class="marquee-item">WHISKY <span class="dot"></span></div>
+    <div class="marquee-item">BOARD GAMES <span class="dot"></span></div>
+    <div class="marquee-item">LIVE VIBES <span class="dot"></span></div>
+    <div class="marquee-item">长岛冰茶 <span class="dot"></span></div>
+    <div class="marquee-item">金汤力 <span class="dot"></span></div>
+    <div class="marquee-item">桂林米粉 <span class="dot"></span></div>
+    <div class="marquee-item">CRAFT DRINKS <span class="dot"></span></div>
+    <div class="marquee-item">微醺时间 <span class="dot"></span></div>
+  </div>
+</div>
+
+<!-- ─── ABOUT ─── -->
+
+<section id="about">
+  <div class="about-visual">
+    <div class="photo-grid">
+      <div class="photo-cell p1">
+        <img src="assets/photos/bar-photo-3.jpg" alt="好的一酒吧夜间门面">
+        <div class="label" data-i18n="photo.interior">酒吧内场</div>
+      </div>
+      <div class="photo-cell p2">
+        <img src="assets/photos/bar-photo-2.jpg" alt="酒吧酒水墙">
+        <div class="label" data-i18n="photo.spirits">酒墙</div>
+      </div>
+      <div class="photo-cell p3">
+        <img src="assets/photos/bar-photo-4.jpg" alt="桌游架">
+        <div class="label" data-i18n="photo.games">桌游区</div>
+      </div>
+      <div class="photo-cell p4">
+        <img src="assets/photos/bar-photo-1.jpg" alt="街边长桌和开放式酒吧空间">
+        <div class="label" data-i18n="photo.terrace">夜色露台</div>
+      </div>
+    </div>
+  </div>
+  <div class="about-content reveal">
+    <div class="section-tag" data-i18n="about.tag">关于我们</div>
+    <h2 class="about-title" data-i18n-html="about.title">有态度的<br><span style="color:var(--amber)">小酒馆</span><br>也有温度</h2>
+    <p class="about-body" data-i18n="about.body">
+      Haodeyi 是广州开放式商业街上的工业风空间。酒吧、酒铺和桌游房在同一个屋檐下，适合带电脑、约朋友，或者只为一杯冰 Kirin 坐到深夜。
+    </p>
+    <div class="about-stats">
+      <div>
+        <div class="stat-num">¥15</div>
+        <div class="stat-label" data-i18n-html="about.stat.price">饮品<br>起价</div>
+      </div>
+      <div>
+        <div class="stat-num">03:00</div>
+        <div class="stat-label" data-i18n-html="about.stat.close">营业<br>到点</div>
+      </div>
+      <div>
+        <div class="stat-num">∞</div>
+        <div class="stat-label" data-i18n-html="about.stat.moods">夜晚<br>情绪</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── MENU ─── -->
+
+<section id="menu">
+  <div class="menu-header reveal">
+    <h2 class="menu-title" data-i18n-html="menu.title">今晚<br>喝什么</h2>
+    <div class="menu-filter">
+      <button class="filter-btn active" onclick="filterMenu('all', this)" data-filter="all">全部</button>
+      <button class="filter-btn" onclick="filterMenu('beer', this)" data-filter="beer">啤酒</button>
+      <button class="filter-btn" onclick="filterMenu('cocktail', this)" data-filter="cocktail">鸡尾酒</button>
+      <button class="filter-btn" onclick="filterMenu('spirits', this)" data-filter="spirits">烈酒</button>
+    </div>
+  </div>
+  <div class="menu-grid" id="menuGrid"></div>
+</section>
+
+<!-- ─── ATMOSPHERE ─── -->
+
+<section id="atmosphere">
+  <div class="atm-header reveal">
+    <div class="section-tag" style="justify-content:center" data-i18n="atmosphere.tag">氛围</div>
+    <h2 class="atm-title" data-i18n-html="atmosphere.title">时间在这里<br><span style="color:var(--amber)">慢下来</span></h2>
+    <p class="atm-subtitle" data-i18n="atmosphere.subtitle">开放门面 · 街边露台 · 夜晚广州</p>
+  </div>
+
+  <div class="atm-features reveal">
+    <div class="feature">
+      <span class="feature-icon">🌃</span>
+      <div class="feature-title" data-i18n="atmosphere.feature.terrace.title">街边露台</div>
+      <p class="feature-body" data-i18n="atmosphere.feature.terrace.body">露天折叠椅，面向夜晚街区，坐下就很难马上离开。</p>
+    </div>
+    <div class="feature">
+      <span class="feature-icon">🎮</span>
+      <div class="feature-title" data-i18n="atmosphere.feature.games.title">桌游</div>
+      <p class="feature-body" data-i18n="atmosphere.feature.games.body">50 多款游戏，从 Guess Who 到 Catan。来了，很容易玩到凌晨 3 点。</p>
+    </div>
+    <div class="feature">
+      <span class="feature-icon">💻</span>
+      <div class="feature-title" data-i18n="atmosphere.feature.work.title">在这里工作</div>
+      <p class="feature-body" data-i18n="atmosphere.feature.work.body">Wi-Fi、插座和长木桌。适合把远程工作接到一杯啤酒后面。</p>
+    </div>
+    <div class="feature">
+      <span class="feature-icon">🏮</span>
+      <div class="feature-title" data-i18n="atmosphere.feature.industrial.title">工业氛围</div>
+      <p class="feature-body" data-i18n="atmosphere.feature.industrial.body">裸露管线、砖墙和菜单霓虹灯，不用用力就很好看。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PHOTOS ─── -->
+
+<section id="photos">
+  <div class="photos-header reveal">
+    <div>
+      <div class="section-tag" data-i18n="photos.tag">现场照片</div>
+      <h2 class="photos-title" data-i18n-html="photos.title">真实的<br><span style="color:var(--amber)">好的一</span></h2>
+    </div>
+    <p class="photos-copy" data-i18n="photos.copy">开放式街边门面、长木桌、酒水墙和桌游架。这里不是摆拍空间，是晚上真的会坐下来的地方。</p>
+  </div>
+
+  <div class="photos-grid reveal">
+    <figure class="gallery-photo">
+      <img src="assets/photos/bar-photo-1.jpg" alt="街边长桌和开放式酒吧空间" loading="lazy">
+      <figcaption class="gallery-caption" data-i18n="photos.caption.terrace">街边长桌</figcaption>
+    </figure>
+    <figure class="gallery-photo">
+      <img src="assets/photos/bar-photo-3.jpg" alt="好的一酒吧夜间门面" loading="lazy">
+      <figcaption class="gallery-caption" data-i18n="photos.caption.front">夜晚门面</figcaption>
+    </figure>
+    <figure class="gallery-photo">
+      <img src="assets/photos/bar-photo-2.jpg" alt="酒吧酒水墙" loading="lazy">
+      <figcaption class="gallery-caption" data-i18n="photos.caption.bar">酒水墙</figcaption>
+    </figure>
+    <figure class="gallery-photo">
+      <img src="assets/photos/bar-photo-4.jpg" alt="桌游架" loading="lazy">
+      <figcaption class="gallery-caption" data-i18n="photos.caption.games">桌游架</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ─── GAMES ─── -->
+
+<section id="games">
+  <div class="section-tag reveal" style="justify-content:center" data-i18n="games.tag">桌游库</div>
+  <h2 class="games-title reveal" data-i18n-html="games.title">50+ 款<br><span style="color:var(--amber)">现货桌游</span></h2>
+  <p class="games-sub reveal" data-i18n="games.subtitle">酒吧客人免费使用</p>
+  <div class="games-list reveal" id="gamesList"></div>
+</section>
+
+<!-- ─── VISIT ─── -->
+
+<section id="visit">
+  <div class="visit-info reveal">
+    <div class="section-tag" data-i18n="visit.tag">如何找到我们</div>
+    <h2 class="about-title" data-i18n-html="visit.title">今天<br>就来</h2>
+    <p style="color:rgba(242,236,216,0.5); font-size:0.8rem; margin-top:1rem; line-height:1.8; font-family:'Noto Serif SC', serif;" data-i18n-html="visit.body">
+      广州 · 开放式商业街<br>
+      找到面向街道的那间小酒吧，声音和灯光会带你过来。
+    </p>
+
+<div class="hours-grid">
+  <div class="hour-row"><span class="hour-day" data-i18n="visit.hours.weekdays">周一 – 周五</span><span class="hour-time">14:00 – 02:00</span></div>
+  <div class="hour-row today"><span class="hour-day" data-i18n="visit.hours.saturday">⚡ 周六</span><span class="hour-time">12:00 – 03:00</span></div>
+  <div class="hour-row today"><span class="hour-day" data-i18n="visit.hours.sunday">⚡ 周日</span><span class="hour-time">12:00 – 03:00</span></div>
+</div>
+
+<div style="margin-top:2.5rem; display:flex; gap:1rem; flex-wrap:wrap;">
+  <a href="#" class="btn-primary map-link-baidu" target="_blank" rel="noopener" style="font-size:0.7rem;" data-i18n="visit.map">打开地图</a>
+  <a href="#" class="btn-ghost map-link-amap" target="_blank" rel="noopener" style="font-size:0.7rem;" data-i18n="visit.amap">高德导航</a>
+</div>
+
+  </div>
+
+  <div class="visit-map">
+    <iframe class="china-map-frame" id="chinaMapFrame" title="Baidu map for HAODEYI BAR" loading="lazy"></iframe>
+    <div class="map-panel">
+      <div>
+        <div class="map-title">好的一 HAODEYI BAR</div>
+        <div class="map-address" data-i18n="visit.address">广州市天河区天河路228号正佳购物广场正佳百货F1</div>
+      </div>
+      <div class="map-actions">
+        <a class="map-action map-link-baidu" href="#" target="_blank" rel="noopener" data-i18n="visit.baidu">百度地图</a>
+        <a class="map-action map-link-amap" href="#" target="_blank" rel="noopener" data-i18n="visit.amap">高德导航</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+
+<footer>
+  <div class="footer-logo">好的一</div>
+  <div class="footer-copy">
+    <span data-i18n-html="footer.copy">© 2026 好的一 BAR · Enjoy Your Life<br>中国广州</span>
+  </div>
+  <div class="footer-social">
+    <a class="social-link" href="#">微</a>
+    <a class="social-link" href="#">抖</a>
+    <a class="social-link" href="#">📷</a>
+  </div>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const trail = document.getElementById('cursorTrail');
+  let mx = 0, my = 0, tx = 0, ty = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top = my + 'px';
+  });
+
+  function animateTrail() {
+    tx += (mx - tx) * 0.12;
+    ty += (my - ty) * 0.12;
+    trail.style.left = tx + 'px';
+    trail.style.top = ty + 'px';
+    requestAnimationFrame(animateTrail);
+  }
+  animateTrail();
+
+  const translations = {
+    zh: {
+      'meta.title': '好的一 · HAODEYI BAR',
+      'nav.menu': '菜单',
+      'nav.atmosphere': '氛围',
+      'nav.photos': '照片',
+      'nav.games': '游戏',
+      'nav.visit': '到店',
+      'cart.ready': '已加入订单',
+      'cart.added': '"{name}" 已加入订单',
+      'cart.label': '购物车',
+      'hero.tag': '广州 · 2021 年开业',
+      'hero.sub': '好的一不只是酒吧。这里是白天收尾、夜晚真正开始的地方：精酿饮品、桌游和松弛的现场气氛。',
+      'hero.cta.menu': '查看菜单',
+      'hero.cta.visit': '如何找到我们',
+      'hero.badge.items': '酒水',
+      'hero.badge.games': '桌游',
+      'hero.badge.price': '起售价',
+      'hero.footer.brand': '好的一 · 享受生活',
+      'hero.footer.scroll': '滚动',
+      'hero.footer.hours': '每日 14:00 – 03:00',
+      'photo.interior': '酒吧内场',
+      'photo.spirits': '酒墙',
+      'photo.games': '桌游区',
+      'photo.terrace': '夜色露台',
+      'about.tag': '关于我们',
+      'about.title': '有态度的<br><span style="color:var(--amber)">小酒馆</span><br>也有温度',
+      'about.body': 'Haodeyi 是广州开放式商业街上的工业风空间。酒吧、酒铺和桌游房在同一个屋檐下，适合带电脑、约朋友，或者只为一杯冰 Kirin 坐到深夜。',
+      'about.stat.price': '饮品<br>起价',
+      'about.stat.close': '营业<br>到点',
+      'about.stat.moods': '夜晚<br>情绪',
+      'menu.title': '今晚<br>喝什么',
+      'menu.watermark': '菜单',
+      'menu.filter.all': '全部',
+      'menu.filter.beer': '啤酒',
+      'menu.filter.cocktail': '鸡尾酒',
+      'menu.filter.spirits': '烈酒',
+      'menu.currency': '人民币',
+      'menu.add': '加入订单',
+      'atmosphere.tag': '氛围',
+      'atmosphere.title': '时间在这里<br><span style="color:var(--amber)">慢下来</span>',
+      'atmosphere.subtitle': '开放门面 · 街边露台 · 夜晚广州',
+      'atmosphere.feature.terrace.title': '街边露台',
+      'atmosphere.feature.terrace.body': '露天折叠椅，面向夜晚街区，坐下就很难马上离开。',
+      'atmosphere.feature.games.title': '桌游',
+      'atmosphere.feature.games.body': '50 多款游戏，从 Guess Who 到 Catan。来了，很容易玩到凌晨 3 点。',
+      'atmosphere.feature.work.title': '在这里工作',
+      'atmosphere.feature.work.body': 'Wi-Fi、插座和长木桌。适合把远程工作接到一杯啤酒后面。',
+      'atmosphere.feature.industrial.title': '工业氛围',
+      'atmosphere.feature.industrial.body': '裸露管线、砖墙和菜单霓虹灯，不用用力就很好看。',
+      'photos.tag': '现场照片',
+      'photos.title': '真实的<br><span style="color:var(--amber)">好的一</span>',
+      'photos.copy': '开放式街边门面、长木桌、酒水墙和桌游架。这里不是摆拍空间，是晚上真的会坐下来的地方。',
+      'photos.caption.terrace': '街边长桌',
+      'photos.caption.front': '夜晚门面',
+      'photos.caption.bar': '酒水墙',
+      'photos.caption.games': '桌游架',
+      'games.tag': '桌游库',
+      'games.title': '50+ 款<br><span style="color:var(--amber)">现货桌游</span>',
+      'games.subtitle': '酒吧客人免费使用',
+      'visit.tag': '如何找到我们',
+      'visit.title': '今天<br>就来',
+      'visit.body': '广州 · 开放式商业街<br>找到面向街道的那间小酒吧，声音和灯光会带你过来。',
+      'visit.address': '广州市天河区天河路228号正佳购物广场正佳百货F1',
+      'visit.hours.weekdays': '周一 – 周五',
+      'visit.hours.saturday': '⚡ 周六',
+      'visit.hours.sunday': '⚡ 周日',
+      'visit.map': '打开地图',
+      'visit.baidu': '百度地图',
+      'visit.amap': '高德导航',
+      'footer.copy': '© 2026 好的一 BAR · Enjoy Your Life<br>中国广州',
+    },
+    ru: {
+      'meta.title': '好的一 · HAODEYI BAR',
+      'nav.menu': 'меню',
+      'nav.atmosphere': 'атмосфера',
+      'nav.photos': 'фото',
+      'nav.games': 'игры',
+      'nav.visit': 'как добраться',
+      'cart.ready': 'добавлено в заказ',
+      'cart.added': '"{name}" добавлено',
+      'cart.label': 'Корзина',
+      'hero.tag': 'Гуанчжоу · открыто с 2021',
+      'hero.sub': '好的一 — это не просто бар. Это место, где заканчивается день и начинается настоящий вечер: крафтовые напитки, настольные игры и живая атмосфера.',
+      'hero.cta.menu': 'Смотреть меню',
+      'hero.cta.visit': 'Как нас найти',
+      'hero.badge.items': 'позиций',
+      'hero.badge.games': 'игр',
+      'hero.badge.price': 'от цены',
+      'hero.footer.brand': '好的一 · Enjoy Your Life',
+      'hero.footer.scroll': 'листай',
+      'hero.footer.hours': 'Каждый день 14:00 – 03:00',
+      'photo.interior': 'Интерьер бара',
+      'photo.spirits': 'Стена алкоголя',
+      'photo.games': 'Игровая зона',
+      'photo.terrace': 'Ночная терраса',
+      'about.tag': 'О нас',
+      'about.title': 'Бар без<br><span style="color:var(--amber)">правил</span>,<br>но с душой',
+      'about.body': 'Haodeyi — это индустриальное пространство на открытой торговой улице Гуанчжоу. Мы совмещаем бар, магазин алкоголя и зал настольных игр под одной крышей. Сюда приходят с ноутбуком, с другом или просто за одним холодным Kirin.',
+      'about.stat.price': 'минимальная<br>цена напитка',
+      'about.stat.close': 'время<br>закрытия',
+      'about.stat.moods': 'настроений<br>за ночь',
+      'menu.title': 'Что<br>пьём',
+      'menu.watermark': 'МЕНЮ',
+      'menu.filter.all': 'Всё',
+      'menu.filter.beer': 'Пиво',
+      'menu.filter.cocktail': 'Коктейли',
+      'menu.filter.spirits': 'Спиртное',
+      'menu.currency': 'CNY',
+      'menu.add': 'Добавить в заказ',
+      'atmosphere.tag': 'Атмосфера',
+      'atmosphere.title': 'Место, где<br><span style="color:var(--amber)">время летит</span>',
+      'atmosphere.subtitle': 'Открытый фасад · Уличная терраса · Ночной Гуанчжоу',
+      'atmosphere.feature.terrace.title': 'Уличная терраса',
+      'atmosphere.feature.terrace.body': 'Складные кресла под открытым небом. Смотришь на ночной квартал — и всё.',
+      'atmosphere.feature.games.title': 'Настольные игры',
+      'atmosphere.feature.games.body': 'Более 50 игр от Guess Who до Catan. Приходи — не уйдёшь до 3 утра.',
+      'atmosphere.feature.work.title': 'Работай здесь',
+      'atmosphere.feature.work.body': 'Wi-Fi, розетки, длинный деревянный стол. Лучшее место для удалёнки с пивом.',
+      'atmosphere.feature.industrial.title': 'Industrial Vibes',
+      'atmosphere.feature.industrial.body': 'Открытые трубы, кирпич, неоновый свет меню — эстетика без усилий.',
+      'photos.tag': 'Фото места',
+      'photos.title': 'Настоящий<br><span style="color:var(--amber)">好的一</span>',
+      'photos.copy': 'Открытый фасад на улице, длинный деревянный стол, стена с напитками и полка настольных игр. Не студийная картинка, а место, где правда хочется сесть вечером.',
+      'photos.caption.terrace': 'Длинный стол у улицы',
+      'photos.caption.front': 'Ночной фасад',
+      'photos.caption.bar': 'Стена напитков',
+      'photos.caption.games': 'Полка с играми',
+      'games.tag': 'Библиотека игр',
+      'games.title': '50+ игр<br><span style="color:var(--amber)">в наличии</span>',
+      'games.subtitle': 'Бесплатно для всех гостей бара',
+      'visit.tag': 'Как нас найти',
+      'visit.title': 'Приходи<br>сегодня',
+      'visit.body': 'Гуанчжоу · Открытая торговая улица<br>Ищи бар с видом на улицу — найдёшь по звуку и свету.',
+      'visit.address': 'Гуанчжоу, Тяньхэ, Tianhe Road 228, Grandview Mall / Zhengjia Department Store F1',
+      'visit.hours.weekdays': 'Понедельник – Пятница',
+      'visit.hours.saturday': '⚡ Суббота',
+      'visit.hours.sunday': '⚡ Воскресенье',
+      'visit.map': 'Показать на карте',
+      'visit.baidu': 'Baidu Maps',
+      'visit.amap': 'Amap / 高德',
+      'footer.copy': '© 2026 HAODEYI BAR · Enjoy Your Life<br>Гуанчжоу, Китай',
+    },
+    en: {
+      'meta.title': '好的一 · HAODEYI BAR',
+      'nav.menu': 'menu',
+      'nav.atmosphere': 'atmosphere',
+      'nav.photos': 'photos',
+      'nav.games': 'games',
+      'nav.visit': 'visit',
+      'cart.ready': 'added to order',
+      'cart.added': '"{name}" added',
+      'cart.label': 'Cart',
+      'hero.tag': 'Guangzhou · Open Since 2021',
+      'hero.sub': '好的一 is more than a bar. It is where the day winds down and the real evening begins: craft drinks, board games, and a lively room.',
+      'hero.cta.menu': 'View menu',
+      'hero.cta.visit': 'Find us',
+      'hero.badge.items': 'items',
+      'hero.badge.games': 'games',
+      'hero.badge.price': 'from',
+      'hero.footer.brand': '好的一 · Enjoy Your Life',
+      'hero.footer.scroll': 'scroll',
+      'hero.footer.hours': 'Open daily 14:00 – 03:00',
+      'photo.interior': 'Bar interior',
+      'photo.spirits': 'Spirits wall',
+      'photo.games': 'Game room',
+      'photo.terrace': 'Night terrace',
+      'about.tag': 'About',
+      'about.title': 'No-rules<br><span style="color:var(--amber)">bar energy</span>,<br>with soul',
+      'about.body': 'Haodeyi is an industrial space on an open commercial street in Guangzhou. A bar, bottle shop, and board-game room share one roof. Come with a laptop, a friend, or just for one cold Kirin.',
+      'about.stat.price': 'drink<br>from',
+      'about.stat.close': 'closing<br>time',
+      'about.stat.moods': 'moods<br>per night',
+      'menu.title': 'What<br>to drink',
+      'menu.watermark': 'MENU',
+      'menu.filter.all': 'All',
+      'menu.filter.beer': 'Beer',
+      'menu.filter.cocktail': 'Cocktails',
+      'menu.filter.spirits': 'Spirits',
+      'menu.currency': 'CNY',
+      'menu.add': 'Add to order',
+      'atmosphere.tag': 'Atmosphere',
+      'atmosphere.title': 'A place where<br><span style="color:var(--amber)">time moves fast</span>',
+      'atmosphere.subtitle': 'Open frontage · Street terrace · Night Guangzhou',
+      'atmosphere.feature.terrace.title': 'Street terrace',
+      'atmosphere.feature.terrace.body': 'Folding chairs under the open sky, facing the night block. Sit down and the city does the rest.',
+      'atmosphere.feature.games.title': 'Board games',
+      'atmosphere.feature.games.body': 'More than 50 games, from Guess Who to Catan. Come in and somehow it is 3 a.m.',
+      'atmosphere.feature.work.title': 'Work here',
+      'atmosphere.feature.work.body': 'Wi-Fi, outlets, and a long wooden table. A quiet remote-work spot that happens to serve beer.',
+      'atmosphere.feature.industrial.title': 'Industrial vibes',
+      'atmosphere.feature.industrial.body': 'Exposed pipes, brick, and neon menu light. Easy atmosphere without trying too hard.',
+      'photos.tag': 'Photos',
+      'photos.title': 'The real<br><span style="color:var(--amber)">好的一</span>',
+      'photos.copy': 'An open street-facing entrance, a long wooden counter, a lit bottle wall, and a board-game shelf. Not a staged room, just the place as it feels at night.',
+      'photos.caption.terrace': 'Street counter',
+      'photos.caption.front': 'Night facade',
+      'photos.caption.bar': 'Bottle wall',
+      'photos.caption.games': 'Game shelf',
+      'games.tag': 'Game library',
+      'games.title': '50+ games<br><span style="color:var(--amber)">on the shelf</span>',
+      'games.subtitle': 'Free for every bar guest',
+      'visit.tag': 'Find us',
+      'visit.title': 'Come by<br>today',
+      'visit.body': 'Guangzhou · Open commercial street<br>Look for the bar facing the street. The sound and light will lead you in.',
+      'visit.address': 'Tianhe Road 228, Grandview Mall / Zhengjia Department Store F1, Tianhe, Guangzhou',
+      'visit.hours.weekdays': 'Monday – Friday',
+      'visit.hours.saturday': '⚡ Saturday',
+      'visit.hours.sunday': '⚡ Sunday',
+      'visit.map': 'Show on map',
+      'visit.baidu': 'Baidu Maps',
+      'visit.amap': 'Amap / 高德',
+      'footer.copy': '© 2026 HAODEYI BAR · Enjoy Your Life<br>Guangzhou, China',
+    },
+  };
+
+  const marqueeItems = {
+    zh: ['麒麟啤酒', '威士忌', '桌游', '现场氛围', '长岛冰茶', '金汤力', '桂林米粉', '精酿饮品', '微醺时间'],
+    ru: ['Kirin Beer', 'Виски', 'Настольные игры', 'Живая атмосфера', 'Лонг-Айленд', 'Джин-тоник', 'Гуйлиньская лапша', 'Крафтовые напитки', 'Время для вечера'],
+    en: ['Kirin Beer', 'Whisky', 'Board Games', 'Live Vibes', 'Long Island Ice Tea', 'Gin Tonic', 'Guilin Rice Noodles', 'Craft Drinks', 'Tipsy Hours'],
+  };
+
+  const menuItems = [
+    {
+      id: 'gin-tonic',
+      name: { zh: '金汤力', ru: 'Джин-тоник', en: 'Gin Tonic' },
+      cat: 'cocktail',
+      price: 39,
+      desc: { zh: 'Hendricks · 汤力水 · 黄瓜 · 青柠', ru: 'Hendricks · тоник · огурец · лайм', en: 'Hendricks · Tonic · Cucumber · Lime' },
+      icon: '🍸',
+    },
+    {
+      id: 'long-island',
+      name: { zh: '长岛冰茶', ru: 'Лонг-Айленд', en: 'Long Island Ice Tea' },
+      cat: 'cocktail',
+      price: 42,
+      desc: { zh: '伏特加 · 朗姆 · 龙舌兰 · 金酒 · 可乐', ru: 'водка · ром · текила · джин · кола', en: 'Vodka · Rum · Tequila · Gin · Cola' },
+      icon: '🥤',
+    },
+    {
+      id: 'kirin',
+      name: { zh: 'Kirin 一番搾り', ru: 'Kirin Ichiban', en: 'Kirin Ichiban' },
+      cat: 'beer',
+      price: 25,
+      desc: { zh: '日本高级拉格 · 500ml 罐装', ru: 'японский премиум лагер · банка 500 мл', en: 'Japan Premium Lager · 500ml Can' },
+      icon: '🍺',
+    },
+    {
+      id: 'whisky-soda',
+      name: { zh: '威士忌苏打', ru: 'Виски-сода', en: 'Whisky Soda' },
+      cat: 'cocktail',
+      price: 35,
+      desc: { zh: '调和苏格兰 · 气泡水 · 冰块', ru: 'шотландский купаж · газированная вода · лёд', en: 'Blended Scotch · Sparkling Water · Ice' },
+      icon: '🥃',
+    },
+    {
+      id: 'plum-wine',
+      name: { zh: '梅酒', ru: 'Умэсю', en: 'Plum Wine' },
+      cat: 'cocktail',
+      price: 32,
+      desc: { zh: '日本梅子 · 荔枝 · 苏打', ru: 'японская слива · личи · содовая', en: 'Japanese Ume · Lychee · Soda' },
+      icon: '🍑',
+    },
+    {
+      id: 'craft-ipa',
+      name: { zh: '精酿 IPA', ru: 'Крафтовая IPA', en: 'Craft IPA' },
+      cat: 'beer',
+      price: 38,
+      desc: { zh: '本地精酿 · 酒花香 · 柑橘调', ru: 'локальный крафт · хмель · цитрус', en: 'Local Craft · Hoppy · Citrus Notes' },
+      icon: '🍻',
+    },
+    {
+      id: 'budweiser',
+      name: { zh: '百威啤酒', ru: 'Budweiser', en: 'Budweiser' },
+      cat: 'beer',
+      price: 15,
+      desc: { zh: '经典美式拉格 · 500ml', ru: 'классический американский лагер · 500 мл', en: 'Classic American · 500ml' },
+      icon: '🍺',
+    },
+    {
+      id: 'macallan',
+      name: { zh: 'Macallan 12', ru: 'Macallan 12', en: 'Macallan 12' },
+      cat: 'spirits',
+      price: 68,
+      desc: { zh: '斯佩塞单一麦芽 · 40ml', ru: 'спейсайдский односолодовый · 40 мл', en: 'Speyside Single Malt · 40ml' },
+      icon: '🥃',
+    },
+    {
+      id: 'vodka',
+      name: { zh: '伏特加', ru: 'Absolut Vodka', en: 'Absolut Vodka' },
+      cat: 'spirits',
+      price: 35,
+      desc: { zh: '瑞典伏特加 · 纯饮或加冰', ru: 'шведская водка · чистая или со льдом', en: 'Swedish Vodka · Neat or on Rocks' },
+      icon: '🍹',
+    },
+    {
+      id: 'jim-beam',
+      name: { zh: '金宾波本', ru: 'Jim Beam', en: 'Jim Beam' },
+      cat: 'spirits',
+      price: 38,
+      desc: { zh: '肯塔基波本威士忌 · 40ml', ru: 'кентуккийский бурбон · 40 мл', en: 'Kentucky Straight Bourbon · 40ml' },
+      icon: '🥃',
+    },
+    {
+      id: 'blue-hawaii',
+      name: { zh: '蓝色夏威夷', ru: 'Голубые Гавайи', en: 'Blue Hawaii' },
+      cat: 'cocktail',
+      price: 39,
+      desc: { zh: '朗姆 · 蓝橙 · 菠萝 · 奶油', ru: 'ром · блю кюрасао · ананас · сливки', en: 'Rum · Blue Curacao · Pineapple · Cream' },
+      icon: '🍹',
+    },
+    {
+      id: 'wheat-beer',
+      name: { zh: '精酿小麦', ru: 'Пшеничное пиво', en: 'Wheat Beer' },
+      cat: 'beer',
+      price: 35,
+      desc: { zh: '比利时风格 · 香蕉 · 丁香', ru: 'бельгийский стиль · банан · гвоздика', en: 'Belgian Style · Banana · Clove' },
+      icon: '🍻',
+    },
+  ];
+
+  const gamesByLang = {
+    zh: ['卡坦岛', '行动代号', 'Uno', '妙语说书人', '铁路环游', '狼人杀', '政变', '爆炸猫', '情书', 'Bang!', '寿司 Go', '猜猜我是谁', '斗地主', '麻将', '国际象棋', '叠叠乐', '瘟疫危机', '领土', '三国杀', '大富翁', '妙探寻凶', '四子棋', '战舰', 'Risk', '农场主', '展翅翱翔', '花砖物语', 'Blokus', 'Taboo'],
+    ru: ['Catan', 'Codenames', 'Uno', 'Dixit', 'Ticket to Ride', 'Werewolf', 'Coup', 'Exploding Kittens', 'Love Letter', 'Bang!', 'Sushi Go', 'Guess Who', '斗地主', '麻将', 'Шахматы', 'Jenga', 'Pandemic', 'Dominion', '三国杀', 'Monopoly', 'Clue', 'Connect Four', 'Battleship', 'Risk', 'Agricola', 'Wingspan', 'Azul', '狼人杀', 'Blokus', 'Taboo'],
+    en: ['Catan', 'Codenames', 'Uno', 'Dixit', 'Ticket to Ride', 'Werewolf', 'Coup', 'Exploding Kittens', 'Love Letter', 'Bang!', 'Sushi Go', 'Guess Who', 'Fight the Landlord', 'Mahjong', 'Chess', 'Jenga', 'Pandemic', 'Dominion', 'Three Kingdoms Kill', 'Monopoly', 'Clue', 'Connect Four', 'Battleship', 'Risk', 'Agricola', 'Wingspan', 'Azul', 'Werewolf', 'Blokus', 'Taboo'],
+  };
+
+  const mapPlace = {
+    name: '好的一 HAODEYI BAR',
+    city: '广州',
+    address: '广州市天河区天河路228号正佳购物广场正佳百货F1',
+  };
+
+  let currentLang = 'zh';
+  let currentFilter = 'all';
+
+  function t(key) {
+    return translations[currentLang][key] || translations.zh[key] || key;
+  }
+
+  function localized(value) {
+    return value[currentLang] || value.zh || value.en || '';
+  }
+
+  function getSavedLanguage() {
+    try {
+      return localStorage.getItem('haodeyi-language');
+    } catch {
+      return null;
+    }
+  }
+
+  function saveLanguage(lang) {
+    try {
+      localStorage.setItem('haodeyi-language', lang);
+    } catch {
+      // Local files or privacy settings can block storage; language switching still works.
+    }
+  }
+
+  function renderMarquee() {
+    const marquee = document.getElementById('marquee');
+    const items = marqueeItems[currentLang] || marqueeItems.zh;
+    const loop = [...items, ...items];
+    marquee.innerHTML = loop.map(item => `<div class="marquee-item">${item} <span class="dot"></span></div>`).join('');
+  }
+
+  function renderMenu(cat = currentFilter) {
+    currentFilter = cat;
+    const grid = document.getElementById('menuGrid');
+    const items = cat === 'all' ? menuItems : menuItems.filter(i => i.cat === cat);
+    grid.innerHTML = items.map(item => `
+      <div class="menu-card">
+        <span class="menu-card-emoji">${item.icon}</span>
+        <div class="menu-card-name">${localized(item.name)}</div>
+        <div class="menu-card-desc">${localized(item.desc)}</div>
+        <div class="menu-card-footer">
+          <div class="price">¥${item.price} <span>${t('menu.currency')}</span></div>
+          <button class="order-btn" onclick="addToCart('${item.id}')" aria-label="${t('menu.add')}">+</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function filterMenu(cat, btn) {
+    currentFilter = cat;
+    document.querySelectorAll('.filter-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.filter === cat);
+    });
+    renderMenu(cat);
+  }
+
+  function renderGames() {
+    const games = gamesByLang[currentLang] || gamesByLang.zh;
+    document.getElementById('gamesList').innerHTML = games.map(g => `<div class="game-tag">${g}</div>`).join('');
+  }
+
+  function setupChinaMap() {
+    const address = encodeURIComponent(mapPlace.address);
+    const city = encodeURIComponent(mapPlace.city);
+    const baiduUrl = `https://api.map.baidu.com/geocoder?address=${address}&output=html&src=webapp.haodeyi.bar`;
+    const amapUrl = `https://uri.amap.com/search?keyword=${address}&city=${city}&view=map&src=haodeyi-bar&callnative=1`;
+
+    document.getElementById('chinaMapFrame').src = baiduUrl;
+    document.querySelectorAll('.map-link-baidu').forEach(link => {
+      link.href = baiduUrl;
+    });
+    document.querySelectorAll('.map-link-amap').forEach(link => {
+      link.href = amapUrl;
+    });
+  }
+
+  function setLanguage(lang) {
+    if (!translations[lang]) return;
+    currentLang = lang;
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : lang;
+    document.title = t('meta.title');
+    document.documentElement.style.setProperty('--menu-watermark', `'${t('menu.watermark')}'`);
+
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      el.textContent = t(el.dataset.i18n);
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(el => {
+      el.innerHTML = t(el.dataset.i18nHtml);
+    });
+    document.querySelectorAll('[data-filter]').forEach(btn => {
+      btn.textContent = t(`menu.filter.${btn.dataset.filter}`);
+      btn.classList.toggle('active', btn.dataset.filter === currentFilter);
+    });
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.lang === lang);
+    });
+
+    document.getElementById('cartBtn').setAttribute('aria-label', t('cart.label'));
+    renderMarquee();
+    renderMenu(currentFilter);
+    renderGames();
+    saveLanguage(lang);
+  }
+
+  // Cart
+  let cartCount = 0;
+  function addToCart(id) {
+    cartCount++;
+    const item = menuItems.find(menuItem => menuItem.id === id);
+    const name = item ? localized(item.name) : '';
+    const count = document.getElementById('cartCount');
+    const toast = document.getElementById('cartToast');
+    count.textContent = cartCount;
+    count.classList.add('show');
+    toast.textContent = t('cart.added').replace('{name}', name);
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2000);
+  }
+
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
+  });
+
+  setupChinaMap();
+  setLanguage(getSavedLanguage() || 'zh');
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        // Stagger children if grid
+        e.target.querySelectorAll('.menu-card, .feature, .gallery-photo, .game-tag, .badge').forEach((el, i) => {
+          el.style.transitionDelay = (i * 0.06) + 's';
+        });
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => observer.observe(r));
+</script>
+
+</body>
+</html>
