@@ -1699,6 +1699,54 @@ grid-template-columns: 1fr;
 grid-template-columns: 1fr;
 }
 }
+
+/* Мобильный переключатель языка */
+.mobile-lang-switcher {
+  display: flex;
+  background: rgba(10,8,5,0.95);
+  border: 1px solid rgba(232,168,56,0.3);
+  border-radius: 8px;
+  padding: 4px;
+  gap: 3px;
+}
+
+.mobile-lang-item {
+  grid-column: span 5;           /* занимает всю ширину */
+  display: flex;
+  justify-content: center;
+  padding-top: 8px;
+  border-top: 1px solid rgba(232,168,56,0.15);
+  margin-top: 4px;
+}
+
+.mobile-lang-switcher .lang-btn {
+  min-width: 46px;
+  height: 36px;
+  font-size: 0.68rem;
+  letter-spacing: 0.05em;
+  border-radius: 5px;
+}
+
+/* Скрываем дубликат на десктопе */
+.mobile-lang-item {
+  display: none;
+}
+
+/* Показываем только на мобильных */
+@media (max-width: 768px) {
+  .mobile-lang-item {
+    display: flex;
+  }
+  
+  /* Скрываем старый переключатель сверху */
+  .lang-switcher {
+    display: none;
+  }
+  
+  .nav-links {
+    grid-template-columns: repeat(5, minmax(0, 1fr)); /* остаётся 5 колонок для меню */
+  }
+}
 </style>
 
 </head>
@@ -1720,22 +1768,35 @@ grid-template-columns: 1fr;
   <div class="hero-bg"></div>
 
   <nav>
-    <a href="#" class="nav-logo">好的一 <span>BAR</span></a>
-    <div class="nav-actions">
-      <ul class="nav-links">
-        <li><a href="#menu" data-i18n="nav.menu">菜单</a></li>
-        <li><a href="#atmosphere" data-i18n="nav.atmosphere">氛围</a></li>
-        <li><a href="#photos" data-i18n="nav.photos">照片</a></li>
-        <li><a href="#games" data-i18n="nav.games">游戏</a></li>
-        <li><a href="#visit" data-i18n="nav.visit">到店</a></li>
-      </ul>
-      <div class="lang-switcher" aria-label="Language">
+  <a href="#" class="nav-logo">好的一 <span>BAR</span></a>
+  
+  <div class="nav-actions">
+    <!-- Десктопный переключатель языка -->
+    <div class="lang-switcher" aria-label="Language">
+      <button class="lang-btn active" type="button" data-lang="zh">中文</button>
+      <button class="lang-btn" type="button" data-lang="ru">RU</button>
+      <button class="lang-btn" type="button" data-lang="en">EN</button>
+    </div>
+  </div>
+
+  <!-- Мобильное меню + язык -->
+  <ul class="nav-links">
+    <li><a href="#menu" data-i18n="nav.menu">菜单</a></li>
+    <li><a href="#atmosphere" data-i18n="nav.atmosphere">氛围</a></li>
+    <li><a href="#photos" data-i18n="nav.photos">照片</a></li>
+    <li><a href="#games" data-i18n="nav.games">游戏</a></li>
+    <li><a href="#visit" data-i18n="nav.visit">到店</a></li>
+    
+    <!-- Мобильный переключатель языка -->
+    <li class="mobile-lang-item">
+      <div class="mobile-lang-switcher">
         <button class="lang-btn active" type="button" data-lang="zh">中文</button>
         <button class="lang-btn" type="button" data-lang="ru">RU</button>
         <button class="lang-btn" type="button" data-lang="en">EN</button>
       </div>
-    </div>
-  </nav>
+    </li>
+  </ul>
+</nav>
 
   <div class="hero-content">
     <div class="hero-tag" data-i18n="hero.tag">广州 · 2021 年开业</div>
