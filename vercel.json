@@ -1,0 +1,20 @@
+{
+  "rewrites": [
+    {
+      "source": "/bar-photo-1.jpg",
+      "destination": "/photos/bar-photo-1.jpg"
+    },
+    {
+      "source": "/bar-photo-2.jpg",
+      "destination": "/photos/bar-photo-2.jpg"
+    },
+    {
+      "source": "/bar-photo-3.jpg",
+      "destination": "/photos/bar-photo-3.jpg"
+    },
+    {
+      "source": "/bar-photo-4.jpg",
+      "destination": "/photos/bar-photo-4.jpg"
+    }
+  ]
+}
